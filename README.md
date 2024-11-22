@@ -1,1 +1,5 @@
 # cmsis_iir_coeff
+
+A simple library to calculate biquad iir coefficients for use with CMSIS Biquad Cascade IIR Filters. Currently only supports first and second order low pass, high pass, low shelf, and high shelf filters. Formulas taken from Robert Bristow-Johnson's [Audio EQ Cookbook](https://webaudio.github.io/Audio-EQ-Cookbook/Audio-EQ-Cookbook.txt) and [DSP StackExchange Post](https://dsp.stackexchange.com/a/93451).
+
+Coefficients are returned in a BiquadFilterCoefficients struct. The layout of this struct follows the expected order of coefficients in the CMSIS functions, so you should be able to just cast a BiquadFilterCoefficients or array of BiquadFilterCoefficients to a float* and pass it to arm_biquad_cascade_df1_init_f32 or arm_biquad_cascade_df2T_init_f32 (or assign it directly to pCoeffs in a struct arm_biquad_casd_df1_inst_f32 or arm_biquad_cascade_df2T_instance_f32). Doing this cast technically breaks strict aliasing rules but it will not cause issues in any real compiler that I have ever encountered. If you want to be super safe then you can copy the coefficients into a float array.
